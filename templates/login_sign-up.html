@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3a5877;
+            color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: #5faedf;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2e5276;
+            color: #ecf0f1;
+        }
+        .form-group input:focus {
+            outline: none;
+            background-color: #3a5376;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #188edd;
+            color: #ecf0f1;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0a6aa9;
+        }
+        .switch-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .switch-link a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+    <form>
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="switch-link">
+            <p>Don't have an account? <a href="#" onclick="switchToSignUp()">Sign Up</a></p>
+        </div>
+    </form>
+</div>
+
+<div class="container" style="display:none;" id="signup-container">
+    <h2>Sign Up</h2>
+    <form onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your Name" required>
+        </div>
+        <div class="form-group">
+            <label for="contact">Phone Number</label>
+            <input type="tel" id="contact" placeholder="Enter your phone number" required pattern="\d{10}" maxlength="10" oninput="validatePhoneNumber()">
+        </div>
+        <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" placeholder="Create a password" required>
+        </div>
+        <div class="form-group">
+            <label for="signup-confirm-password">Confirm Password</label>
+            <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+        <div class="switch-link">
+            <p>Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+        </div>
+    </form>
+</div>
+
+<script>
+    function switchToSignUp() {
+        document.querySelector('.container').style.display = 'none';
+        document.getElementById('signup-container').style.display = 'block';
+    }
+
+    function switchToLogin() {
+        document.getElementById('signup-container').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+    }
+
+    function validatePasswords() {
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+
+    // function validatePhoneNumber() {
+    //     const contactInput = document.getElementById('contact');
+    //     const phoneNumber = contactInput.value;
+        
+    //     // Remove any non-digit characters
+    //     contactInput.value = phoneNumber.replace(/\D/g, '');
+        
+    //     // Limit the input to 10 digits
+    //     if (contactInput.value.length > 10) {
+    //         contactInput.value = contactInput.value.slice(0, 10);
+    //     }
+    // }
+
+    function validateForm() {
+        if (!validatePasswords()) {
+            return false;
+        }
+        
+        const contactInput = document.getElementById('contact').value;
+        if (contactInput.length !== 10) {
+            alert("Phone number must be exactly 10 digits!");
+            return false;
+        }
+
+        return true; // Allow form submission
+    }
+</script>
+
+</body>
+</html>
